@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import br.com.swing.dao.DAO;
 import br.com.swing.model.Cliente;
 import br.com.swing.model.ModeloTabela;
 
@@ -48,9 +49,13 @@ public class JPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public JPrincipal() {
-		clientes = new ArrayList<>();
-		clientes.add(new Cliente("1","Lucas","472992","Lcuas@ghmail","1499143982","nao informado"));
-		clientes.add(new Cliente("2","Maria","999999","maria@ghmail","1499143982","Ramos Pereria"));
+		DAO dao = new DAO();
+		
+		try {
+			clientes = dao.listarCliente();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
