@@ -70,6 +70,10 @@ public class JPrincipal extends JFrame {
 		JButton btnCadastraCliente = new JButton("Cadastrar Cliente");
 		btnCadastraCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JCadastro jcadastro = new JCadastro();
+				jcadastro.setLocationRelativeTo(null);
+				jcadastro.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				jcadastro.setVisible(true);
 			}
 		});
 		btnCadastraCliente.setBounds(30, 55, 117, 23);

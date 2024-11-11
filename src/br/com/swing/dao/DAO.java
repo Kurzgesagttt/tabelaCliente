@@ -16,8 +16,8 @@ public class DAO {
 	private static ResultSet resultSet = null;
 	
 	private static String CADASTRAR_CLIENTE = "INSERT INTO CLIENTE "
-			+ "(ID,NOME,CPF,EMAIL,ENDERECO,TELEFONE "
-			+ "VALUES (?, ? ,? ,? ,? ,? )";
+			+ "(NOME,CPF,EMAIL,ENDERECO,TELEFONE) "
+			+ "VALUES (?, ? ,? ,? ,? )";
 	
 	private static String CONSULTA_CLIENTE = "SELECT * FROM CLIENTE "
 			+ "WHERE ID = ?";
@@ -25,7 +25,7 @@ public class DAO {
 	private static String ALTERAR_CLIENTE = "UPDATE CLIENTE SET"
 			+ "NOME = ?, CPF = ?, EMAIL = ?, ENDERECO = ?, TELEFONE = ? "
 			+ "WHERE ID = ?";
-	private static String DELETAR_CLIENTE = "DELETE CLIENTE "
+	private static String DELETAR_CLIENTE = "DELETE FROM CLIENTE "
 			+ "WHERE ID = ?";
 	
 	private static String LISTAR_CLIENTE = "SELECT * FROM CLIENTE "
@@ -53,6 +53,7 @@ public class DAO {
 			preparedStatement.setString(i++, cliente.getEndereco());
 			preparedStatement.setString(i++, cliente.getTelefone());
 			
+			preparedStatement.executeUpdate();
 			connection.commit();
 			
 			JOptionPane.showMessageDialog(null, "Cliente incluido com sucesso");
@@ -108,7 +109,7 @@ public class DAO {
 		try {
 			preparedStatement = connection.prepareStatement(query);
 			
-			int i = 0;
+			int i = 1;
 			preparedStatement.setString(i++, cliente.getNome());
 			preparedStatement.setString(i++, cliente.getCpf());
 			preparedStatement.setString(i++, cliente.getEmail());
@@ -135,15 +136,10 @@ public class DAO {
 		
 		String query = DELETAR_CLIENTE;
 		try {
-			preparedStatement = connection.prepareStatement(query);
-			
-			int i = 0;
-			preparedStatement.setString(i++, id);
-			
+			preparedStatement = connection.prepareStatement(query);			
+			preparedStatement.setString(1, id);
 			preparedStatement.execute();
-			
 			connection.commit();
-			
 			JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso");
 			
 		} catch (Exception e) {
