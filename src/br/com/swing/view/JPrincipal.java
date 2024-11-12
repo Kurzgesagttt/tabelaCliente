@@ -22,7 +22,7 @@ import br.com.swing.model.ModeloTabela;
 public class JPrincipal extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textProcura;
 	private JTable table;
 	private ArrayList<Cliente> clientes;
 
@@ -76,13 +76,13 @@ public class JPrincipal extends JFrame {
 				jcadastro.setVisible(true);
 			}
 		});
-		btnCadastraCliente.setBounds(30, 55, 117, 23);
+		btnCadastraCliente.setBounds(30, 11, 117, 23);
 		contentPane.add(btnCadastraCliente);
 		
-		textField = new JTextField();
-		textField.setBounds(157, 55, 193, 23);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textProcura = new JTextField();
+		textProcura.setBounds(160, 67, 193, 23);
+		contentPane.add(textProcura);
+		textProcura.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 117, 606, 296);
@@ -93,6 +93,21 @@ public class JPrincipal extends JFrame {
 		table = new JTable();
 		table.setModel(modeloTabela);
 		scrollPane.setViewportView(table);
+		
+		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String id = textProcura.getText();
+				try {
+					dao.consultarCliente(id);
+				} catch (Exception e1) {
+					System.out.println("Nao encontrado");
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnPesquisar.setBounds(30, 67, 117, 23);
+		contentPane.add(btnPesquisar);
 		
 	}
 }

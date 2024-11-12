@@ -87,8 +87,6 @@ public class DAO {
 						);
 			}
 			
-			JOptionPane.showMessageDialog(null, "Cliente incluido com sucesso");
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -168,8 +166,6 @@ public class DAO {
 						resultSet.getString("ENDERECO"),
 						resultSet.getString("TELEFONE")));
 			}
-			
-			JOptionPane.showMessageDialog(null, "Cliente incluido com sucesso");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
