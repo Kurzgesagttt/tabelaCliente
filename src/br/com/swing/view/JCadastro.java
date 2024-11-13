@@ -108,10 +108,6 @@ public class JCadastro extends JFrame {
 		textAreaEndereco.setBounds(10, 223, 456, 46);
 		contentPane.add(textAreaEndereco);
 		
-		JButton btnIncluir = new JButton(clienteSelecionado == null ? "Incluir" :"Alterar");
-		btnIncluir.setBounds(377, 304, 89, 23);
-		contentPane.add(btnIncluir);
-		
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.setBounds(10, 304, 89, 23);
 		contentPane.add(btnExcluir);
@@ -119,13 +115,16 @@ public class JCadastro extends JFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dao.excuirCliente(clienteSelecionado.getId());
+				abrirTelaPrincipal(jprincipal);
 			}
 		});
+		btnExcluir.setVisible(false);
 		
 		
-		
+		JButton btnIncluir = new JButton(clienteSelecionado == null ? "Incluir" :"Alterar");
+		btnIncluir.setBounds(377, 304, 89, 23);
+		contentPane.add(btnIncluir);
 		btnIncluir.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent e) {
 				
 				Cliente cliente = new Cliente(null,textFieldNome.getText(),textFieldCpf.getText(),
@@ -137,16 +136,15 @@ public class JCadastro extends JFrame {
 					
 				}else {
 					dao.alterarCliente(clienteSelecionado.getId(), cliente);
+					abrirTelaPrincipal(jprincipal);
 				}
 			}
-
 		});
-		
 		
 		if(clienteSelecionado != null) {
 			preencherCampos(clienteSelecionado);
+			btnExcluir.setVisible(true);
 		}
-		
 	}
 	
 	private void preencherCampos(Cliente clienteSelecCliente) {
