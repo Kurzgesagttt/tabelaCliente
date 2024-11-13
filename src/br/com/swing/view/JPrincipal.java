@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -13,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import br.com.swing.dao.DAO;
 import br.com.swing.model.Cliente;
@@ -25,6 +28,7 @@ public class JPrincipal extends JFrame {
 	private JTextField textProcura;
 	private JTable table;
 	private ArrayList<Cliente> clientes;
+	private JPrincipal jprincipal;
 
 	/**
 	 * Launch the application.
@@ -50,7 +54,7 @@ public class JPrincipal extends JFrame {
 	 */
 	public JPrincipal() {
 		DAO dao = new DAO();
-		
+		this.jprincipal = this;
 		try {
 			clientes = dao.listarCliente();
 		} catch (Exception e) {
@@ -59,7 +63,7 @@ public class JPrincipal extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 680, 494);
+		setBounds(100, 100, 702, 562);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,7 +74,7 @@ public class JPrincipal extends JFrame {
 		JButton btnCadastraCliente = new JButton("Cadastrar Cliente");
 		btnCadastraCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JCadastro jcadastro = new JCadastro();
+				JCadastro jcadastro = new JCadastro(null,jprincipal);
 				jcadastro.setLocationRelativeTo(null);
 				jcadastro.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				jcadastro.setVisible(true);
@@ -80,6 +84,7 @@ public class JPrincipal extends JFrame {
 		contentPane.add(btnCadastraCliente);
 		
 		textProcura = new JTextField();
+		textProcura.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textProcura.setBounds(160, 67, 193, 23);
 		contentPane.add(textProcura);
 		textProcura.setColumns(10);
@@ -90,16 +95,15 @@ public class JPrincipal extends JFrame {
 		
 		ModeloTabela modeloTabela = new ModeloTabela(clientes);
 		
-		table = new JTable();
-		table.setModel(modeloTabela);
-		scrollPane.setViewportView(table);
-		
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String id = textProcura.getText();
 				try {
-					dao.consultarCliente(id);
+					Cliente clienteEncontrado = dao.consultarCliente(id);
+					//FIXME terminar o metodo de busca
+					System.out.println(clienteEncontrado.getCpf());
+					
 				} catch (Exception e1) {
 					System.out.println("Nao encontrado");
 					e1.printStackTrace();
@@ -109,5 +113,29 @@ public class JPrincipal extends JFrame {
 		btnPesquisar.setBounds(30, 67, 117, 23);
 		contentPane.add(btnPesquisar);
 		
+		table = new JTable();
+		table.setModel(modeloTabela); 
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {  
+				if(e.getButton() == 1) {// 1 é o botao esquerdo
+					try {
+						Cliente clienteSelecionado =
+								dao.consultarCliente(modeloTabela.getValueAt(table.getSelectedRow(), 0).toString());
+						
+						JCadastro jcadastro = new JCadastro(clienteSelecionado,jprincipal);
+						
+						jcadastro.setLocationRelativeTo(null);
+						jcadastro.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+						jcadastro.setVisible(true);
+						
+					} catch (Exception e1) {
+						
+						e1.printStackTrace();
+					}
+				}
+			}
+		});;
+		scrollPane.setViewportView(table);
+	
 	}
 }

@@ -10,13 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
 import br.com.swing.dao.DAO;
 import br.com.swing.model.Cliente;
-import javax.swing.JTextArea;
 
 public class JCadastro extends JFrame {
 
@@ -26,15 +25,13 @@ public class JCadastro extends JFrame {
 	private JTextField textFieldCpf;
 	private JTextField textFieldTelefone;
 	private JTextField textFieldEmail;
-
-	/**
-	 * Launch the application.
-	 */
+	private JTextArea textAreaEndereco;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JCadastro frame = new JCadastro();
+					JCadastro frame = new JCadastro(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +43,8 @@ public class JCadastro extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public JCadastro() {
+	public JCadastro(Cliente clienteSelecionado, JPrincipal jprincipal) {
+		DAO dao = new DAO();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 511, 377);
 		contentPane = new JPanel();
@@ -106,23 +104,66 @@ public class JCadastro extends JFrame {
 		lblEndereo.setBounds(10, 208, 76, 14);
 		contentPane.add(lblEndereo);
 		
-		JTextArea textAreaEndereco = new JTextArea();
+		textAreaEndereco = new JTextArea();
 		textAreaEndereco.setBounds(10, 223, 456, 46);
 		contentPane.add(textAreaEndereco);
 		
-		JButton btnIncluir = new JButton("Incluir");
-		btnIncluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DAO dao = new DAO();
-				//String id, String nome,String cpf, String email, String endereco, String telefone
-				dao.cadastraCliente(new Cliente(null,textFieldNome.getText(),textFieldCpf.getText(),
-						textFieldEmail.getText(),textAreaEndereco.getText(),textFieldTelefone.getText()));
-				
-			}
-		});
-		btnIncluir.setBounds(185, 304, 89, 23);
+		JButton btnIncluir = new JButton(clienteSelecionado == null ? "Incluir" :"Alterar");
+		btnIncluir.setBounds(377, 304, 89, 23);
 		contentPane.add(btnIncluir);
 		
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.setBounds(10, 304, 89, 23);
+		contentPane.add(btnExcluir);
+		btnExcluir.setForeground(new Color(255, 0, 0));
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dao.excuirCliente(clienteSelecionado.getId());
+			}
+		});
+		
+		
+		
+		btnIncluir.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				Cliente cliente = new Cliente(null,textFieldNome.getText(),textFieldCpf.getText(),
+						textFieldEmail.getText(),textAreaEndereco.getText(),textFieldTelefone.getText());
+				
+				if(clienteSelecionado == null) {
+					dao.cadastraCliente(cliente);
+					abrirTelaPrincipal(jprincipal);
+					
+				}else {
+					dao.alterarCliente(clienteSelecionado.getId(), cliente);
+				}
+			}
+
+		});
+		
+		
+		if(clienteSelecionado != null) {
+			preencherCampos(clienteSelecionado);
+		}
 		
 	}
+	
+	private void preencherCampos(Cliente clienteSelecCliente) {
+		textFieldNome.setText(clienteSelecCliente.getNome());
+		textFieldCpf.setText(clienteSelecCliente.getCpf());
+		textFieldEmail.setText(clienteSelecCliente.getEmail());
+		textFieldTelefone.setText(clienteSelecCliente.getTelefone());
+		textAreaEndereco.setText(clienteSelecCliente.getEndereco());
+	}
+	
+	private void abrirTelaPrincipal(JPrincipal jprincipal) {
+		jprincipal.dispose();
+		dispose();
+		jprincipal = new JPrincipal();
+		jprincipal.setLocationRelativeTo(null);
+		jprincipal.setVisible(true);
+		
+	}
+	
 }

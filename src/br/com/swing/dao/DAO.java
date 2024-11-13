@@ -22,7 +22,7 @@ public class DAO {
 	private static String CONSULTA_CLIENTE = "SELECT * FROM CLIENTE "
 			+ "WHERE ID = ?";
 	
-	private static String ALTERAR_CLIENTE = "UPDATE CLIENTE SET"
+	private static String ALTERAR_CLIENTE = "UPDATE CLIENTE SET "
 			+ "NOME = ?, CPF = ?, EMAIL = ?, ENDERECO = ?, TELEFONE = ? "
 			+ "WHERE ID = ?";
 	private static String DELETAR_CLIENTE = "DELETE FROM CLIENTE "

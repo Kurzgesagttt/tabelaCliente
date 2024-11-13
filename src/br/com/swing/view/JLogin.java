@@ -94,7 +94,6 @@ public class JLogin extends JFrame {
 				if(userField.getText() != null && !userField.getText().isEmpty()
 						&& passwordField.getText() != null
 						&& !passwordField.getText().isEmpty()) {
-					//compara
 					if(criptografia.criptografar().equals("202CB962AC59075B964B07152D234B70")) {
 						
 					JOptionPane.showMessageDialog(btnNewButton, "Informações válidas");
@@ -110,6 +109,7 @@ public class JLogin extends JFrame {
 				}
 			}
 		});
+		
 		btnNewButton.setBackground(Color.GREEN);
 		btnNewButton.setForeground(Color.PINK);
 		btnNewButton.setBounds(86, 181, 89, 23);
