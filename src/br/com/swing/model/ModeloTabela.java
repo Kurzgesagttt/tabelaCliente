@@ -12,7 +12,10 @@ public class ModeloTabela extends AbstractTableModel{
 		this.clientes = clientes;
 	}
 
+<<<<<<< HEAD
 	
+=======
+>>>>>>> ed223e403a3183c22194445e71c2eec1cfafcf14
 	private static final String[] colunas = {"ID", "Nome", "CPF", "Email", "Telefone", "Endereco"};
 	
 	private ArrayList<Cliente> clientes; 
@@ -46,12 +49,17 @@ public class ModeloTabela extends AbstractTableModel{
 		}else {
 			return null;
 		}
+<<<<<<< HEAD
 	}
 	
 	public void setCliente(ArrayList<Cliente> clientes) {
 		this.clientes = clientes;
 	}
 	
+=======
+
+	}
+>>>>>>> ed223e403a3183c22194445e71c2eec1cfafcf14
 	@Override
 	public String getColumnName(int column) {
 		return colunas[column];
