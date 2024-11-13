@@ -16,10 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import br.com.swing.dao.DAO;
 import br.com.swing.model.Cliente;
-<<<<<<< HEAD
 import br.com.swing.model.ModeloTabela;
-=======
->>>>>>> ed223e403a3183c22194445e71c2eec1cfafcf14
 
 public class JCadastro extends JFrame {
 
@@ -44,17 +41,9 @@ public class JCadastro extends JFrame {
 		});
 	}
 
-<<<<<<< HEAD
 	public JCadastro(Cliente clienteSelecionado, JPrincipal jprincipal) {
 		DAO dao = new DAO();
 		
-=======
-	/**
-	 * Create the frame.
-	 */
-	public JCadastro(Cliente clienteSelecionado, JPrincipal jprincipal) {
-		DAO dao = new DAO();
->>>>>>> ed223e403a3183c22194445e71c2eec1cfafcf14
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 511, 377);
 		contentPane = new JPanel();
@@ -165,11 +154,7 @@ public class JCadastro extends JFrame {
 		textAreaEndereco.setText(clienteSelecCliente.getEndereco());
 	}
 	
-<<<<<<< HEAD
 	public void abrirTelaPrincipal(JPrincipal jprincipal) {
-=======
-	private void abrirTelaPrincipal(JPrincipal jprincipal) {
->>>>>>> ed223e403a3183c22194445e71c2eec1cfafcf14
 		jprincipal.dispose();
 		dispose();
 		jprincipal = new JPrincipal();

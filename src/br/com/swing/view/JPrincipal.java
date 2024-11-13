@@ -101,7 +101,6 @@ public class JPrincipal extends JFrame {
 				String id = textProcura.getText();
 				try {
 					Cliente clienteEncontrado = dao.consultarCliente(id);
-<<<<<<< HEAD
 					ArrayList<Cliente> listaClientes;
 					
 					if(clienteEncontrado != null) {
@@ -114,10 +113,6 @@ public class JPrincipal extends JFrame {
 					modeloTabela.setCliente(listaClientes);
 					modeloTabela.fireTableDataChanged();
 					
-=======
-					//FIXME terminar o metodo de busca
-					System.out.println(clienteEncontrado.getCpf());
->>>>>>> ed223e403a3183c22194445e71c2eec1cfafcf14
 					
 				} catch (Exception e1) {
 					System.out.println("Nao encontrado");
@@ -128,10 +123,7 @@ public class JPrincipal extends JFrame {
 		btnPesquisar.setBounds(30, 67, 117, 23);
 		contentPane.add(btnPesquisar);
 		
-<<<<<<< HEAD
 		//acoes na tabela
-=======
->>>>>>> ed223e403a3183c22194445e71c2eec1cfafcf14
 		table = new JTable();
 		table.setModel(modeloTabela); 
 		table.addMouseListener(new MouseAdapter() {
@@ -139,12 +131,8 @@ public class JPrincipal extends JFrame {
 				if(e.getButton() == 1) {// 1 é o botao esquerdo
 					try {
 						Cliente clienteSelecionado =
-<<<<<<< HEAD
 								dao.consultarCliente(modeloTabela.
 										getValueAt(table.getSelectedRow(), 0).toString());
-=======
-								dao.consultarCliente(modeloTabela.getValueAt(table.getSelectedRow(), 0).toString());
->>>>>>> ed223e403a3183c22194445e71c2eec1cfafcf14
 						
 						JCadastro jcadastro = new JCadastro(clienteSelecionado,jprincipal);
 						
@@ -152,27 +140,16 @@ public class JPrincipal extends JFrame {
 						jcadastro.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 						jcadastro.setVisible(true);
 						
-<<<<<<< HEAD
 					} catch (Exception e1) {			
-=======
-					} catch (Exception e1) {
-						
->>>>>>> ed223e403a3183c22194445e71c2eec1cfafcf14
 						e1.printStackTrace();
 					}
 				}
 			}
 		});;
-<<<<<<< HEAD
 		
 		scrollPane.setViewportView(table);
 	}
 	
 	
 	
-=======
-		scrollPane.setViewportView(table);
-	
-	}
->>>>>>> ed223e403a3183c22194445e71c2eec1cfafcf14
 }
